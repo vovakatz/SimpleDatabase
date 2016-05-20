@@ -11,8 +11,8 @@ namespace Db
 	{
 		public static void Main(string[] args)
 		{
-            Dictionary<string, string> simpleDb = new Dictionary<string, string>();
             IDbCommand command;
+            App.Init();
 
 			while (true)
             {
@@ -24,10 +24,16 @@ namespace Db
                 switch (arg)
                 {
                     case "SET":
-                        command = new Set(simpleDb, args);
+                        command = new Set(args);
                         break;
                     case "GET":
-                        command = new Get(simpleDb, args);
+                        command = new Get(args);
+                        break;
+                    case "UNSET":
+                        command = new Unset(args);
+                        break;
+                    case "NUMEQUALTO":
+                        command = new NumEqualTo(args);
                         break;
                     default:
                         Console.WriteLine("you entered unrecognized command");

@@ -1,4 +1,5 @@
-Db/Db.xproj
 Db/bin/
 Db/obj/
 Db/project.lock.json
+.vs/
+Db/Db.xproj.user

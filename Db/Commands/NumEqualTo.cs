@@ -5,23 +5,20 @@ using System.Threading.Tasks;
 
 namespace Db.Commands
 {
-    public class Get : IDbCommand
+    public class NumEqualTo : IDbCommand
     {
         string[] _args;
-
-        public string Output { get; set; }
-
-        public Get(string[] args)
+        public NumEqualTo(string[] args)
         {
             _args = args;
         }
 
         public string Perform()
         {
-            string value;
-            if (App.SimpleDb.TryGetValue(_args[0], out value))
-                return value;
-            return "NULL";
+            int count;
+            if (App.SimpleDbCounter.TryGetValue(_args[0], out count))
+                return count.ToString();
+            return "0";
         }
 
         public bool Validate()

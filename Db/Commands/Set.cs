@@ -7,20 +7,26 @@ namespace Db.Commands
 {
     public class Set : IDbCommand
     {
-        Dictionary<string, string> _simpleDb;
         string[] _args;
 
         public string Output { get; set; }
 
-        public Set(Dictionary<string, string> simpleDb, string[] args)
+        public Set(string[] args)
         {
-            _simpleDb = simpleDb;
             _args = args;
         }
 
         public string Perform()
         {
-            _simpleDb.Add(_args[0], _args[1]);
+            Unset unset = new Unset(_args);
+            unset.Perform();
+            App.SimpleDb.Add(_args[0], _args[1]);
+
+            int count;
+            if (App.SimpleDbCounter.TryGetValue(_args[1], out count))
+                App.SimpleDbCounter[_args[1]] = ++count;
+            else
+                App.SimpleDbCounter.Add(_args[1], 1);
             return "";
         }
 
