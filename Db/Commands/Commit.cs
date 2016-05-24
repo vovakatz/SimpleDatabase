@@ -9,7 +9,10 @@ namespace Db.Commands
     {
         public string Perform()
         {
-            App.CurrentTransactionHistory = App.HistoryStack.Pop();
+            if (App.HistoryStack.Count > 0)
+                App.CurrentTransactionHistory = App.HistoryStack.Pop();
+            else
+                App.CurrentTransactionHistory = null;
             return string.Empty;
         }
 

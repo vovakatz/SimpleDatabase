@@ -12,11 +12,14 @@ namespace Db
         public static Dictionary<string, int> SimpleDbCounter { get; set; }
         public static Stack<Stack<KeyValuePair<string, string>>> HistoryStack { get; set; }
         public static Stack<KeyValuePair<string, string>> CurrentTransactionHistory { get; set; }
+        public static bool IsRollbackActive { get; set; }
 
         public static void Init()
         {
             SimpleDb = new Dictionary<string, string>();
             SimpleDbCounter = new Dictionary<string, int>();
+            HistoryStack = new Stack<Stack<KeyValuePair<string, string>>>();
+            IsRollbackActive = false;
         }
     }
 }

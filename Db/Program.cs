@@ -35,6 +35,15 @@ namespace Db
                     case "NUMEQUALTO":
                         command = new NumEqualTo(args);
                         break;
+                    case "BEGIN":
+                        command = new Begin();
+                        break;
+                    case "COMMIT":
+                        command = new Commit();
+                        break;
+                    case "ROLLBACK":
+                        command = new Rollback();
+                        break;
                     default:
                         Console.WriteLine("you entered unrecognized command");
                         command = null;
