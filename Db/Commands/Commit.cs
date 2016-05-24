@@ -5,14 +5,11 @@ using System.Threading.Tasks;
 
 namespace Db.Commands
 {
-    public class Begin : IDbCommand
+    public class Commit : IDbCommand
     {
         public string Perform()
         {
-            if (App.CurrentTransactionHistory != null)
-                App.HistoryStack.Push(App.CurrentTransactionHistory);
-            App.CurrentTransactionHistory = new Stack<KeyValuePair<string, string>>();
-
+            App.CurrentTransactionHistory = App.HistoryStack.Pop();
             return string.Empty;
         }
 

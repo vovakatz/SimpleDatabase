@@ -10,6 +10,8 @@ namespace Db
         public static Dictionary<string, string> SimpleDb { get; set; }
         public static Stack<Dictionary<string, string>> SimpleDbTransactions { get; set; }
         public static Dictionary<string, int> SimpleDbCounter { get; set; }
+        public static Stack<Stack<KeyValuePair<string, string>>> HistoryStack { get; set; }
+        public static Stack<KeyValuePair<string, string>> CurrentTransactionHistory { get; set; }
 
         public static void Init()
         {
