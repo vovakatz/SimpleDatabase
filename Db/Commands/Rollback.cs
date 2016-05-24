@@ -16,6 +16,12 @@ namespace Db.Commands
                 IDbCommand set = new Set(new string[] { item.Key, item.Value} );
                 set.Perform();
             }
+
+            if (App.HistoryStack.Count > 0)
+                App.CurrentTransactionHistory = App.HistoryStack.Pop();
+            else
+                App.CurrentTransactionHistory = null;
+
             App.IsRollbackActive = false;
             return string.Empty;
         }

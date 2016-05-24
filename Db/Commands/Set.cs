@@ -8,8 +8,6 @@ namespace Db.Commands
     public class Set : IDbCommand
     {
         string[] _args;
-        string _key;
-        string _value;
 
         public string Output { get; set; }
 
