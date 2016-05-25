@@ -19,7 +19,7 @@ namespace Db.Commands
         public string Perform()
         {
             if (App.CurrentTransactionHistory != null && !App.IsRollbackActive)
-                if (App.SimpleDb[_args[0]] != null)
+                if (App.SimpleDb.ContainsKey(_args[0]))
                     App.CurrentTransactionHistory.Push(new KeyValuePair<string, string>(_args[0], App.SimpleDb[_args[0]]));
 
             string value;
