@@ -21,6 +21,8 @@ namespace Db.Commands
             if (App.CurrentTransactionHistory != null  && !App.IsRollbackActive)
                 if (App.SimpleDb.ContainsKey(_args[0]))
                     App.CurrentTransactionHistory.Push(new KeyValuePair<string, string>(_args[0], App.SimpleDb[_args[0]]));
+                else
+                    App.CurrentTransactionHistory.Push(new KeyValuePair<string, string>(_args[0], null));
 
             Unset unset = new Unset(_args);
             unset.Perform();

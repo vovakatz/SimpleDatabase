@@ -9,20 +9,33 @@ namespace Db.Commands
     {
         public string Perform()
         {
-            App.IsRollbackActive = true;
-            while(App.CurrentTransactionHistory != null && App.CurrentTransactionHistory.Count > 0)
-            {
-                var item = App.CurrentTransactionHistory.Pop();
-                IDbCommand set = new Set(new string[] { item.Key, item.Value} );
-                set.Perform();
-            }
-
-            if (App.HistoryStack.Count > 0)
-                App.CurrentTransactionHistory = App.HistoryStack.Pop();
+            if (App.CurrentTransactionHistory == null)
+                return "NO TRANSACTION";
             else
-                App.CurrentTransactionHistory = null;
+            {
+                App.IsRollbackActive = true;
+                while (App.CurrentTransactionHistory != null && App.CurrentTransactionHistory.Count > 0)
+                {
+                    var item = App.CurrentTransactionHistory.Pop();
+                    if (item.Value == null)
+                    {
+                        IDbCommand unset = new Unset(new string[] { item.Key, item.Value });
+                        unset.Perform();
+                    }
+                    else
+                    {
+                        IDbCommand set = new Set(new string[] { item.Key, item.Value });
+                        set.Perform();
+                    }
+                }
 
-            App.IsRollbackActive = false;
+                if (App.HistoryStack.Count > 0)
+                    App.CurrentTransactionHistory = App.HistoryStack.Pop();
+                else
+                    App.CurrentTransactionHistory = null;
+
+                App.IsRollbackActive = false;
+            }
             return string.Empty;
         }
 
